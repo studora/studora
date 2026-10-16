@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://studora.github.io/studora/sitemap.xml
