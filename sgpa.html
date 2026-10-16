@@ -157,6 +157,124 @@
             display: none;
         }
 
+        /* ---------- Guide content below the calculator ---------- */
+
+        .guide-section {
+            margin-top: 56px;
+            max-width: 720px;
+        }
+
+        .guide-section h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(22px, 3.5vw, 28px);
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+            margin-bottom: 14px;
+        }
+
+        .guide-section p {
+            line-height: 1.75;
+            margin-bottom: 14px;
+        }
+
+        .formula-box {
+            background: #f1efff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 18px 0;
+            font-weight: 600;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .example-table-wrap {
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .example-table th,
+        .example-table td {
+            padding: 11px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .example-table th {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .example-table tfoot td {
+            font-weight: 700;
+            border-bottom: none;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            background: white;
+        }
+
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .faq-item p {
+            margin: 12px 0 2px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .related-tools {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .related-tools a {
+            display: block;
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .related-tools span {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 20px;
+            margin: 14px 0;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
         @media (max-width: 650px) {
             .calculator-card {
                 padding: 18px;
@@ -249,11 +367,172 @@
 
         </section>
 
+        <!-- ========== Guide content ========== -->
+
+        <section class="guide-section">
+            <h2>How SGPA is calculated</h2>
+
+            <p>
+                SGPA stands for Semester Grade Point Average. It summarizes
+                your performance in a single semester. Each subject's grade
+                points are weighted by that subject's credits, so a 4-credit
+                subject affects your SGPA more than a 2-credit subject.
+            </p>
+
+            <div class="formula-box">
+                SGPA = (Credits₁ × Grade points₁ + Credits₂ × Grade points₂ + …) ÷ (Credits₁ + Credits₂ + …)
+            </div>
+
+            <p>
+                This calculator accepts grade points from 0 to 10, which is
+                the 10-point scale used by many universities in India. Your
+                university decides how each letter grade or mark range maps
+                to grade points, so use the values from your own grade sheet.
+            </p>
+        </section>
+
+        <section class="guide-section">
+            <h2>Worked example</h2>
+
+            <p>
+                These are the same four subjects the calculator loads by
+                default, so you can click "Calculate SGPA" and compare.
+            </p>
+
+            <div class="example-table-wrap">
+                <table class="example-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Credits</th>
+                            <th scope="col">Grade points</th>
+                            <th scope="col">Credits × grade points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mathematics</td>
+                            <td>4</td>
+                            <td>8</td>
+                            <td>32</td>
+                        </tr>
+                        <tr>
+                            <td>Programming</td>
+                            <td>4</td>
+                            <td>9</td>
+                            <td>36</td>
+                        </tr>
+                        <tr>
+                            <td>Database Systems</td>
+                            <td>3</td>
+                            <td>8</td>
+                            <td>24</td>
+                        </tr>
+                        <tr>
+                            <td>Computer Networks</td>
+                            <td>3</td>
+                            <td>7</td>
+                            <td>21</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total</td>
+                            <td>14</td>
+                            <td></td>
+                            <td>113</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <p>
+                SGPA = 113 ÷ 14 = 8.07 (rounded to two decimal places).
+            </p>
+        </section>
+
+        <section class="guide-section">
+            <h2>Frequently asked questions</h2>
+
+            <details class="faq-item">
+                <summary>What are grade points?</summary>
+                <p>
+                    Grade points are the numbers your university assigns to
+                    each letter grade or mark range, such as a grade point
+                    value for an A or a B. The mapping differs between
+                    universities, so check your marksheet or grading policy
+                    instead of assuming.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary>What is the difference between SGPA and CGPA?</summary>
+                <p>
+                    SGPA covers one semester. CGPA combines all your
+                    completed semesters. Once you have your SGPA for each
+                    semester, you can use the
+                    <a href="cgpa.html">CGPA Calculator</a> to combine them.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Which subjects should I include?</summary>
+                <p>
+                    Add every subject your university counts toward SGPA.
+                    Rules for non-credit courses, audit courses and failed
+                    subjects differ between universities, so follow your
+                    university's official rules for what to include.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Can I use this for a 4.0 grading scale?</summary>
+                <p>
+                    No. Grade points here must be between 0 and 10. If your
+                    university uses a 4.0 scale, the result will not match
+                    your official SGPA.
+                </p>
+            </details>
+        </section>
+
+        <section class="guide-section">
+            <h2>More student tools</h2>
+
+            <ul class="related-tools">
+                <li>
+                    <a href="cgpa.html">
+                        CGPA Calculator
+                        <span>Combine your semester SGPAs into one cumulative score.</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="percentage.html">
+                        Percentage Calculator
+                        <span>Turn your marks into a percentage.</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="attendance.html">
+                        Attendance Calculator
+                        <span>Check your attendance and plan how many classes you can miss.</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
     </main>
 
     <footer>
         <a href="index.html" class="logo">studora<span>.</span></a>
         <p>Study smarter. Achieve more.</p>
+
+        <nav class="footer-links" aria-label="Footer">
+            <a href="about.html">About Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms of Use</a>
+        </nav>
+
         <small>© <span id="year"></span> Studora. Built for students.</small>
     </footer>
 
@@ -262,6 +541,7 @@
         const errorMessage = document.getElementById("errorMessage");
         const result = document.getElementById("result");
 
+        // Also used to give every input a unique id so labels can be linked to them.
         let subjectCounter = 0;
 
         function addSubject(name = "", credits = "", grade = "") {
@@ -271,25 +551,28 @@
             }
 
             subjectCounter++;
+            const id = subjectCounter;
 
             const row = document.createElement("div");
             row.className = "subject-row";
 
             row.innerHTML = `
                 <div class="field">
-                    <label>Subject</label>
+                    <label for="subject-name-${id}">Subject</label>
                     <input
                         type="text"
+                        id="subject-name-${id}"
                         class="subject-name"
-                        placeholder="Subject ${subjectCounter}"
+                        placeholder="Subject ${id}"
                         value="${name}"
                     >
                 </div>
 
                 <div class="field">
-                    <label>Credits</label>
+                    <label for="subject-credits-${id}">Credits</label>
                     <input
                         type="number"
+                        id="subject-credits-${id}"
                         class="subject-credits"
                         min="0.01"
                         max="100"
@@ -300,9 +583,10 @@
                 </div>
 
                 <div class="field">
-                    <label>Grade points</label>
+                    <label for="subject-grade-${id}">Grade points</label>
                     <input
                         type="number"
+                        id="subject-grade-${id}"
                         class="subject-grade"
                         min="0"
                         max="10"
@@ -402,8 +686,9 @@
                 document.getElementById("sgpaValue").textContent =
                     sgpa.toFixed(2);
 
+                // Number(...toFixed(2)) avoids long decimals such as 42.300000000000004
                 document.getElementById("resultDetails").textContent =
-                    `Total credits: ${totalCredits} · Weighted grade points: ${weightedGradeTotal.toFixed(2)}`;
+                    `Total credits: ${Number(totalCredits.toFixed(2))} · Weighted grade points: ${weightedGradeTotal.toFixed(2)}`;
 
                 result.classList.remove("hidden");
             }
