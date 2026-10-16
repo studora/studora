@@ -37,9 +37,11 @@
             margin: 12px 0;
         }
 
-        .calculator-heading p {
+        .calculator-heading p,
+        .helper-text {
             color: var(--muted);
             font-size: 14px;
+            line-height: 1.7;
         }
 
         .calculator-card {
@@ -63,6 +65,7 @@
 
         .form-group input {
             width: 100%;
+            box-sizing: border-box;
             padding: 13px 14px;
             border: 1px solid #dedbea;
             border-radius: 10px;
@@ -115,6 +118,7 @@
         .result p {
             color: var(--muted);
             font-size: 13px;
+            line-height: 1.6;
         }
 
         .error-message {
@@ -124,10 +128,115 @@
             color: #b42318;
             border-radius: 10px;
             font-size: 14px;
+            line-height: 1.6;
         }
 
         .hidden {
             display: none;
+        }
+
+        .guide-section {
+            margin-top: 50px;
+        }
+
+        .guide-section h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(22px, 3.5vw, 28px);
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+            margin-bottom: 14px;
+        }
+
+        .guide-section p {
+            line-height: 1.8;
+            margin-bottom: 14px;
+        }
+
+        .formula-box {
+            background: #f1efff;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 18px 0;
+            font-weight: 600;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .example-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            margin: 18px 0;
+        }
+
+        .example-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            background: white;
+        }
+
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .faq-item p {
+            margin: 12px 0 2px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .related-tools {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .related-tools a {
+            display: block;
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .related-tools a:hover {
+            border-color: var(--primary);
+        }
+
+        .related-tools span {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 20px;
+            margin: 14px 0;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 14px;
         }
 
         @media (max-width: 500px) {
@@ -162,13 +271,19 @@
 
             <p>
                 Calculate your exam percentage using your marks
-                and the maximum possible marks.
+                and the maximum possible marks. Get your result
+                instantly with Studora's free percentage calculator.
             </p>
         </section>
 
         <section class="calculator-card">
 
-            <form id="percentageForm">
+            <p class="helper-text">
+                Enter the marks you obtained and the maximum marks
+                for the same examination or assessment.
+            </p>
+
+            <form id="percentageForm" novalidate>
 
                 <div class="form-group">
                     <label for="obtainedMarks">
@@ -180,6 +295,7 @@
                         id="obtainedMarks"
                         min="0"
                         step="any"
+                        inputmode="decimal"
                         placeholder="e.g. 420"
                         required
                     >
@@ -195,6 +311,7 @@
                         id="totalMarks"
                         min="0.01"
                         step="any"
+                        inputmode="decimal"
                         placeholder="e.g. 500"
                         required
                     >
@@ -226,12 +343,161 @@
 
         </section>
 
+        <section class="guide-section">
+            <h2>How to calculate percentage of marks</h2>
+
+            <p>
+                A percentage tells you how many marks you obtained
+                compared with the total marks available. Students
+                commonly use percentages to understand their exam
+                performance, calculate test scores, and compare results.
+            </p>
+
+            <div class="formula-box">
+                Percentage = (Marks Obtained ÷ Total Marks) × 100
+            </div>
+
+            <p>
+                Enter your marks in the calculator above. The calculator
+                divides your obtained marks by the total marks and
+                multiplies the result by 100.
+            </p>
+        </section>
+
+        <section class="guide-section">
+            <h2>Percentage calculation example</h2>
+
+            <p>
+                Suppose you scored 420 marks out of a maximum of 500.
+                You can calculate your percentage as follows:
+            </p>
+
+            <div class="example-box">
+                <p><strong>Marks obtained:</strong> 420</p>
+
+                <p><strong>Total marks:</strong> 500</p>
+
+                <p>
+                    <strong>Calculation:</strong>
+                    (420 ÷ 500) × 100
+                </p>
+
+                <p>
+                    <strong>Final percentage:</strong> 84%
+                </p>
+            </div>
+
+            <p>
+                Enter the same values into the calculator to verify
+                the answer.
+            </p>
+        </section>
+
+        <section class="guide-section">
+            <h2>Frequently asked questions</h2>
+
+            <details class="faq-item">
+                <summary>How do I calculate my exam percentage?</summary>
+
+                <p>
+                    Divide the marks you obtained by the total possible
+                    marks and multiply the result by 100. For example,
+                    360 out of 400 is (360 ÷ 400) × 100 = 90%.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Can I calculate percentage for any exam?</summary>
+
+                <p>
+                    Yes. You can use this calculator for school exams,
+                    college tests, university examinations, and other
+                    assessments, provided you know your obtained marks
+                    and the total possible marks.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary>What happens if I score zero marks?</summary>
+
+                <p>
+                    If you obtain zero marks out of a positive total,
+                    your percentage is 0%.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Can I enter decimal marks?</summary>
+
+                <p>
+                    Yes. The calculator accepts decimal values, which
+                    can be useful when your assessment uses fractional
+                    marks.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Is percentage the same as CGPA?</summary>
+
+                <p>
+                    No. Percentage represents marks relative to the
+                    maximum possible marks, while CGPA represents
+                    cumulative grade-point performance. The conversion
+                    between CGPA and percentage depends on your
+                    university's official rules.
+                </p>
+            </details>
+        </section>
+
+        <section class="guide-section">
+            <h2>Explore more student calculators</h2>
+
+            <ul class="related-tools">
+                <li>
+                    <a href="cgpa.html">
+                        CGPA Calculator
+                        <span>
+                            Calculate your cumulative grade point average
+                            using your semester results.
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="sgpa.html">
+                        SGPA Calculator
+                        <span>
+                            Calculate your semester grade point average
+                            using subject credits and grade points.
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="attendance.html">
+                        Attendance Calculator
+                        <span>
+                            Check your attendance percentage and
+                            understand your attendance requirements.
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
     </main>
 
     <footer>
         <a href="index.html" class="logo">studora<span>.</span></a>
 
         <p>Study smarter. Achieve more.</p>
+
+        <nav class="footer-links" aria-label="Footer">
+            <a href="about.html">About Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms of Use</a>
+        </nav>
 
         <small>
             © <span id="year"></span> Studora.
@@ -247,38 +513,49 @@
         const errorMessage = document.getElementById("errorMessage");
         const result = document.getElementById("result");
 
+        function hideMessages() {
+            errorMessage.classList.add("hidden");
+            result.classList.add("hidden");
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove("hidden");
+            result.classList.add("hidden");
+        }
+
         form.addEventListener("submit", function (event) {
             event.preventDefault();
 
-            errorMessage.classList.add("hidden");
-            result.classList.add("hidden");
+            hideMessages();
 
             const obtainedRaw = obtainedInput.value.trim();
             const totalRaw = totalInput.value.trim();
+
+            if (obtainedRaw === "" || totalRaw === "") {
+                showError("Please enter both your obtained marks and total marks.");
+                return;
+            }
 
             const obtained = Number(obtainedRaw);
             const total = Number(totalRaw);
 
             if (
-                obtainedRaw === "" ||
-                totalRaw === "" ||
                 !Number.isFinite(obtained) ||
                 !Number.isFinite(total) ||
                 obtained < 0 ||
                 total <= 0
             ) {
-                errorMessage.textContent =
-                    "Enter valid marks. Maximum possible marks must be greater than zero.";
-
-                errorMessage.classList.remove("hidden");
+                showError(
+                    "Enter valid marks. Obtained marks cannot be negative, and total marks must be greater than zero."
+                );
                 return;
             }
 
             if (obtained > total) {
-                errorMessage.textContent =
-                    "Marks obtained cannot exceed the maximum possible marks.";
-
-                errorMessage.classList.remove("hidden");
+                showError(
+                    "Marks obtained cannot exceed the maximum possible marks."
+                );
                 return;
             }
 
@@ -292,6 +569,9 @@
 
             result.classList.remove("hidden");
         });
+
+        obtainedInput.addEventListener("input", hideMessages);
+        totalInput.addEventListener("input", hideMessages);
 
         document.getElementById("year").textContent =
             new Date().getFullYear();
