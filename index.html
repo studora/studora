@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Studora offers free student tools, including CGPA,
+          SGPA, attendance, and percentage calculators.">
+
+    <title>Studora — Study Smarter. Achieve More.</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="#" class="logo">studora<span>.</span></a>
+
+        <nav>
+            <a href="#tools">Explore Tools</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="hero-content">
+
+                <span class="eyebrow">
+                    YOUR STUDENT TOOLKIT
+                </span>
+
+                <h1>
+                    Study smarter.<br>
+                    <span>Achieve more.</span>
+                </h1>
+
+                <p>
+                    Simple, free tools to help you calculate,
+                    plan, and make your student life easier.
+                </p>
+
+                <div class="search-box">
+                    <span aria-hidden="true">⌕</span>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search for a student tool..."
+                        aria-label="Search student tools"
+                    >
+                </div>
+
+                <div class="quick-info">
+                    <span>✓ Free to use</span>
+                    <span>✓ Simple and fast</span>
+                    <span>✓ No account needed</span>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="tools-section" id="tools">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">THE TOOLKIT</span>
+                    <h2>Tools for your student life</h2>
+                    <p>Everything you need, all in one place.</p>
+                </div>
+
+                <span class="tool-count" id="toolCount">
+                    4 tools
+                </span>
+            </div>
+
+            <div class="tools-grid" id="toolsGrid">
+
+                <a href="cgpa.html" class="tool-card"
+                   data-search="cgpa cumulative grade point average grades">
+                    <div class="tool-icon purple">01</div>
+                    <span class="category">ACADEMICS</span>
+                    <h3>CGPA Calculator</h3>
+                    <p>Calculate your cumulative grade point average.</p>
+                    <span class="card-link">Explore tool ↗</span>
+                </a>
+
+                <a href="sgpa.html" class="tool-card"
+                   data-search="sgpa semester grade point average credits">
+                    <div class="tool-icon blue">02</div>
+                    <span class="category">ACADEMICS</span>
+                    <h3>SGPA Calculator</h3>
+                    <p>Calculate your semester GPA using credits and grades.</p>
+                    <span class="card-link">Explore tool ↗</span>
+                </a>
+
+                <a href="attendance.html" class="tool-card"
+                   data-search="attendance percentage classes college">
+                    <div class="tool-icon green">03</div>
+                    <span class="category">COLLEGE LIFE</span>
+                    <h3>Attendance Calculator</h3>
+                    <p>Check your attendance and plan your next classes.</p>
+                    <span class="card-link">Explore tool ↗</span>
+                </a>
+
+                <a href="percentage.html" class="tool-card"
+                   data-search="percentage marks exam score calculation">
+                    <div class="tool-icon orange">04</div>
+                    <span class="category">EXAM TOOLS</span>
+                    <h3>Percentage Calculator</h3>
+                    <p>Calculate your percentage from marks in seconds.</p>
+                    <span class="card-link">Explore tool ↗</span>
+                </a>
+
+            </div>
+
+            <p class="no-results" id="noResults" hidden>
+                No tools found. Try another search.
+            </p>
+
+        </section>
+
+        <section class="about-section" id="about">
+            <span class="eyebrow">WHY STUDORA?</span>
+            <h2>Less confusion. More progress.</h2>
+            <p>
+                We're building a simple collection of useful tools
+                to make student life a little easier.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        <a href="#" class="logo">studora<span>.</span></a>
+
+        <p>Study smarter. Achieve more.</p>
+
+        <small>
+            © <span id="year"></span> Studora.
+            Built for students.
+        </small>
+    </footer>
+
+</body>
+</html>

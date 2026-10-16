@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Calculate your exam percentage quickly with Studora's free percentage calculator.">
+
+    <title>Percentage Calculator | Studora</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .calculator-page {
+            max-width: 760px;
+            margin: auto;
+            padding: 55px 22px 80px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .calculator-heading {
+            margin-bottom: 30px;
+        }
+
+        .calculator-heading h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(30px, 5vw, 44px);
+            line-height: 1.2;
+            letter-spacing: -1.5px;
+            margin: 12px 0;
+        }
+
+        .calculator-heading p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .calculator-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 12px 40px rgba(45, 35, 100, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #dedbea;
+            border-radius: 10px;
+            font: inherit;
+            color: var(--text);
+        }
+
+        .form-group input:focus {
+            outline: 2px solid #dcd6ff;
+            border-color: var(--primary);
+        }
+
+        .calculate-button {
+            width: 100%;
+            border: none;
+            border-radius: 11px;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .calculate-button:hover {
+            opacity: 0.9;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 24px;
+            background: #f1efff;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .result span {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .result strong {
+            display: block;
+            color: var(--primary);
+            font-size: 42px;
+            margin: 5px 0;
+        }
+
+        .result p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .error-message {
+            margin-top: 15px;
+            padding: 13px;
+            background: #fff0ef;
+            color: #b42318;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 500px) {
+            .calculator-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">studora<span>.</span></a>
+
+        <nav>
+            <a href="index.html#tools">All Tools</a>
+            <a href="index.html#about">About</a>
+        </nav>
+    </header>
+
+    <main class="calculator-page">
+
+        <a href="index.html#tools" class="back-link">
+            ← Back to all tools
+        </a>
+
+        <section class="calculator-heading">
+            <span class="eyebrow">EXAM TOOLS</span>
+
+            <h1>Percentage Calculator</h1>
+
+            <p>
+                Calculate your exam percentage using your marks
+                and the maximum possible marks.
+            </p>
+        </section>
+
+        <section class="calculator-card">
+
+            <form id="percentageForm">
+
+                <div class="form-group">
+                    <label for="obtainedMarks">
+                        Marks obtained
+                    </label>
+
+                    <input
+                        type="number"
+                        id="obtainedMarks"
+                        min="0"
+                        step="any"
+                        placeholder="e.g. 420"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="totalMarks">
+                        Maximum possible marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="totalMarks"
+                        min="0.01"
+                        step="any"
+                        placeholder="e.g. 500"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="calculate-button">
+                    Calculate Percentage
+                </button>
+
+            </form>
+
+            <div
+                id="errorMessage"
+                class="error-message hidden"
+                role="alert"
+            ></div>
+
+            <section
+                id="result"
+                class="result hidden"
+                aria-live="polite"
+            >
+                <span>Your Percentage</span>
+
+                <strong id="percentageValue">0%</strong>
+
+                <p id="resultDetails"></p>
+            </section>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <a href="index.html" class="logo">studora<span>.</span></a>
+
+        <p>Study smarter. Achieve more.</p>
+
+        <small>
+            © <span id="year"></span> Studora.
+            Built for students.
+        </small>
+    </footer>
+
+    <script>
+        const form = document.getElementById("percentageForm");
+        const obtainedInput = document.getElementById("obtainedMarks");
+        const totalInput = document.getElementById("totalMarks");
+
+        const errorMessage = document.getElementById("errorMessage");
+        const result = document.getElementById("result");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            errorMessage.classList.add("hidden");
+            result.classList.add("hidden");
+
+            const obtainedRaw = obtainedInput.value.trim();
+            const totalRaw = totalInput.value.trim();
+
+            const obtained = Number(obtainedRaw);
+            const total = Number(totalRaw);
+
+            if (
+                obtainedRaw === "" ||
+                totalRaw === "" ||
+                !Number.isFinite(obtained) ||
+                !Number.isFinite(total) ||
+                obtained < 0 ||
+                total <= 0
+            ) {
+                errorMessage.textContent =
+                    "Enter valid marks. Maximum possible marks must be greater than zero.";
+
+                errorMessage.classList.remove("hidden");
+                return;
+            }
+
+            if (obtained > total) {
+                errorMessage.textContent =
+                    "Marks obtained cannot exceed the maximum possible marks.";
+
+                errorMessage.classList.remove("hidden");
+                return;
+            }
+
+            const percentage = (obtained / total) * 100;
+
+            document.getElementById("percentageValue").textContent =
+                percentage.toFixed(2) + "%";
+
+            document.getElementById("resultDetails").textContent =
+                `You scored ${obtained} out of ${total} marks.`;
+
+            result.classList.remove("hidden");
+        });
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
+
+</body>
+</html>
