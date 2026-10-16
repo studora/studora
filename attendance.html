@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="Calculate your college attendance percentage,
-          classes needed to reach your target, and classes you can miss.">
+    <title>Attendance Calculator: Classes Needed | Studora</title>
 
-    <title>Attendance Calculator | Studora</title>
+    <meta
+        name="description"
+        content="Calculate your college attendance percentage, find how many classes you need to attend to reach 75% attendance, and check how many classes you can miss."
+    >
+
+    <meta name="robots" content="index, follow">
 
     <link rel="stylesheet" href="style.css">
 
@@ -42,6 +46,7 @@
         .calculator-heading p {
             color: var(--muted);
             font-size: 15px;
+            line-height: 1.7;
         }
 
         .calculator-card {
@@ -64,12 +69,13 @@
         }
 
         .form-group input {
+            box-sizing: border-box;
             width: 100%;
             padding: 13px 14px;
             border: 1px solid #dedbea;
             border-radius: 10px;
             font: inherit;
-            font-size: 15px;
+            font-size: 16px;
             color: var(--text);
             background: #fff;
         }
@@ -96,6 +102,12 @@
             opacity: 0.9;
         }
 
+        .calculate-button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 3px;
+        }
+
         .results {
             margin-top: 25px;
         }
@@ -112,6 +124,7 @@
             display: block;
             color: var(--muted);
             font-size: 13px;
+            line-height: 1.6;
         }
 
         .result-main strong {
@@ -131,18 +144,21 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 16px;
+            min-width: 0;
         }
 
         .result-item span {
             display: block;
             font-size: 12px;
             color: var(--muted);
+            line-height: 1.6;
         }
 
         .result-item strong {
             display: block;
             font-size: 20px;
             margin-top: 5px;
+            overflow-wrap: anywhere;
         }
 
         .result-message {
@@ -151,7 +167,7 @@
             border-radius: 10px;
             background: #f6f5fa;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .error-message {
@@ -161,6 +177,7 @@
             border-radius: 10px;
             margin-top: 15px;
             font-size: 14px;
+            line-height: 1.6;
         }
 
         .hidden {
@@ -174,13 +191,115 @@
             margin-top: 22px;
         }
 
+        .content-section {
+            margin-top: 36px;
+            line-height: 1.8;
+        }
+
+        .content-section h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+            line-height: 1.35;
+            margin-bottom: 14px;
+        }
+
+        .content-section h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 18px;
+            line-height: 1.4;
+            margin: 24px 0 8px;
+        }
+
+        .content-section p {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 14px;
+        }
+
+        .formula-box {
+            background: #f6f5fa;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            margin: 18px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .formula-box strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .formula-box p {
+            margin-bottom: 0;
+            color: var(--text);
+        }
+
+        .related-tools {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .related-tool {
+            display: block;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .related-tool:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .related-tool strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .related-tool span {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .faq-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item h3 {
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .faq-item p {
+            margin: 0;
+        }
+
         @media (max-width: 500px) {
+            .calculator-page {
+                padding: 35px 16px 60px;
+            }
+
             .calculator-card {
                 padding: 20px;
             }
 
-            .result-grid {
+            .result-grid,
+            .related-tools {
                 grid-template-columns: 1fr;
+            }
+
+            .result-main strong {
+                font-size: 34px;
             }
         }
     </style>
@@ -200,7 +319,7 @@
     <main class="calculator-page">
 
         <a href="index.html#tools" class="back-link">
-            ← Back to all tools
+            &larr; Back to all tools
         </a>
 
         <section class="calculator-heading">
@@ -209,8 +328,9 @@
             <h1>Attendance Calculator</h1>
 
             <p>
-                Calculate your attendance percentage and plan
-                how many classes you need to attend.
+                Calculate your college attendance percentage, find out
+                how many classes you need to attend to reach your target,
+                and check how many classes you can miss.
             </p>
         </section>
 
@@ -228,6 +348,7 @@
                         id="totalClasses"
                         min="1"
                         step="1"
+                        inputmode="numeric"
                         placeholder="e.g. 40"
                         required
                     >
@@ -243,6 +364,7 @@
                         id="attendedClasses"
                         min="0"
                         step="1"
+                        inputmode="numeric"
                         placeholder="e.g. 30"
                         required
                     >
@@ -256,9 +378,10 @@
                     <input
                         type="number"
                         id="targetAttendance"
-                        min="1"
+                        min="0.01"
                         max="100"
                         step="any"
+                        inputmode="decimal"
                         value="75"
                         required
                     >
@@ -280,6 +403,7 @@
                 id="results"
                 class="results hidden"
                 aria-live="polite"
+                aria-atomic="true"
             >
 
                 <div class="result-main">
@@ -310,11 +434,156 @@
             </section>
 
             <p class="calculator-note">
-                This calculator assumes every future class counts
-                equally toward attendance. Actual college attendance
-                policies may differ. Confirm your institution's rules
-                before making attendance decisions.
+                This calculator assumes every future class counts equally
+                toward attendance. Actual college attendance policies may
+                differ. Confirm your institution's rules before making
+                attendance decisions.
             </p>
+
+        </section>
+
+        <!-- Attendance calculation guide -->
+        <section class="content-section">
+
+            <h2>How to Calculate Attendance Percentage</h2>
+
+            <p>
+                Attendance percentage shows how many classes you attended
+                out of the total classes conducted. You can use it to
+                check whether you meet your college's minimum attendance
+                requirement.
+            </p>
+
+            <div class="formula-box">
+                <strong>Attendance Percentage Formula</strong>
+                <p>
+                    Attendance (%) = (Classes Attended &divide;
+                    Total Classes Conducted) &times; 100
+                </p>
+            </div>
+
+            <h3>Example of Attendance Calculation</h3>
+
+            <p>
+                Suppose your college has conducted 40 classes and you
+                attended 30. Your attendance percentage is:
+            </p>
+
+            <div class="formula-box">
+                <p>
+                    (30 &divide; 40) &times; 100 = <strong>75%</strong>
+                </p>
+            </div>
+
+            <p>
+                If your target is 75%, you currently meet that target.
+                Enter your own class counts above to calculate your
+                attendance and plan for upcoming classes.
+            </p>
+
+            <h3>How Many Classes Do You Need to Attend?</h3>
+
+            <p>
+                If your attendance is below your target, the calculator
+                estimates how many consecutive classes you must attend
+                without missing any to reach the required percentage.
+                The estimate assumes no additional absences.
+            </p>
+
+            <h3>How Many Classes Can You Miss?</h3>
+
+            <p>
+                If you already meet your target, the calculator estimates
+                the maximum number of additional classes you could miss
+                while remaining at or above that percentage. Your
+                institution may apply separate attendance rules, so
+                always check its official policy.
+            </p>
+
+        </section>
+
+        <!-- Related student tools -->
+        <section class="content-section">
+
+            <h2>Explore More Student Calculators</h2>
+
+            <p>
+                Use these free tools to calculate grades and check your
+                academic performance.
+            </p>
+
+            <div class="related-tools">
+
+                <a href="cgpa.html" class="related-tool">
+                    <strong>CGPA Calculator</strong>
+                    <span>Calculate your cumulative grade point average.</span>
+                </a>
+
+                <a href="sgpa.html" class="related-tool">
+                    <strong>SGPA Calculator</strong>
+                    <span>Calculate your semester grade point average.</span>
+                </a>
+
+                <a href="percentage.html" class="related-tool">
+                    <strong>Percentage Calculator</strong>
+                    <span>Convert marks into a percentage.</span>
+                </a>
+
+                <a href="index.html#tools" class="related-tool">
+                    <strong>All Student Tools</strong>
+                    <span>Explore more tools on Studora.</span>
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- Frequently asked questions -->
+        <section class="content-section">
+
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <h3>How do I calculate my attendance percentage?</h3>
+
+                <p>
+                    Divide the number of classes you attended by the
+                    total classes conducted, then multiply the result
+                    by 100.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How many classes do I need to attend for 75% attendance?</h3>
+
+                <p>
+                    It depends on your current attendance. Enter your
+                    total classes, attended classes, and a target of 75%
+                    in the calculator to estimate how many consecutive
+                    classes you need to attend.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I reach 100% attendance after missing a class?</h3>
+
+                <p>
+                    No. If you have already missed a class, attending
+                    additional classes can increase your percentage but
+                    cannot bring it back to exactly 100%.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Is 75% attendance compulsory in every college?</h3>
+
+                <p>
+                    No. Requirements vary by institution, course, and
+                    applicable academic rules. Check your college's
+                    official attendance policy to confirm the minimum
+                    requirement.
+                </p>
+            </div>
 
         </section>
 
@@ -325,9 +594,15 @@
 
         <p>Study smarter. Achieve more.</p>
 
+        <nav aria-label="Footer navigation">
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms</a>
+        </nav>
+
         <small>
-            © <span id="year"></span> Studora.
-            Built for students.
+            &copy; <span id="year"></span> Studora. Built for students.
         </small>
     </footer>
 
@@ -361,6 +636,15 @@
             const target = Number(targetInput.value);
 
             if (
+                totalInput.value.trim() === "" ||
+                attendedInput.value.trim() === "" ||
+                targetInput.value.trim() === ""
+            ) {
+                showError("Please fill in all three fields.");
+                return;
+            }
+
+            if (
                 !Number.isInteger(total) ||
                 !Number.isInteger(attended) ||
                 total < 1 ||
@@ -368,7 +652,7 @@
                 attended > total
             ) {
                 showError(
-                    "Enter valid class counts. Attended classes cannot exceed total classes."
+                    "Enter valid class counts. Total classes must be at least 1, and attended classes must be between 0 and the total."
                 );
                 return;
             }
@@ -385,63 +669,103 @@
             }
 
             const current = (attended / total) * 100;
-
-            // Small tolerance avoids floating-point rounding errors.
             const epsilon = 1e-10;
 
-            // Minimum whole number of consecutive classes needed.
-            const needed = Math.max(
-                0,
-                Math.ceil(
-                    (target * total - 100 * attended) /
-                    (100 - target) - epsilon
-                )
-            );
+            let needed;
 
-            // Maximum whole number of future absences while
-            // maintaining at least the target attendance.
-            const canMiss = Math.max(
-                0,
-                Math.floor(
-                    (100 * attended - target * total) /
-                    target + epsilon
-                )
-            );
+            if (current + epsilon >= target) {
+                needed = 0;
+            } else if (target === 100) {
+                // Missing classes cannot be recovered to exactly 100%.
+                needed = Infinity;
+            } else {
+                needed = Math.max(
+                    0,
+                    Math.ceil(
+                        (
+                            target * total - 100 * attended
+                        ) / (100 - target) - epsilon
+                    )
+                );
+            }
+
+            let canMiss = 0;
+
+            if (current + epsilon >= target && target < 100) {
+                canMiss = Math.max(
+                    0,
+                    Math.floor(
+                        (
+                            100 * attended - target * total
+                        ) / target + epsilon
+                    )
+                );
+            }
 
             document.getElementById("currentPercentage").textContent =
                 current.toFixed(2) + "%";
 
-            const status = document.getElementById("attendanceStatus");
+            const status =
+                document.getElementById("attendanceStatus");
 
             if (current + epsilon >= target) {
                 status.textContent =
                     "You are currently meeting your target.";
+            } else if (target === 100) {
+                status.textContent =
+                    "You cannot reach 100% because you have already missed classes.";
             } else {
                 status.textContent =
                     "You are currently below your target.";
             }
 
-            document.getElementById("classesNeeded").textContent =
-                needed === 0
-                    ? "Target reached"
-                    : `${needed} ${needed === 1 ? "class" : "classes"}`;
+            const neededElement =
+                document.getElementById("classesNeeded");
 
-            document.getElementById("classesCanMiss").textContent =
-                current + epsilon < target
-                    ? "0 — attend upcoming classes"
-                    : `${canMiss} ${canMiss === 1 ? "class" : "classes"}`;
+            if (needed === Infinity) {
+                neededElement.textContent = "Not possible";
+            } else if (needed === 0) {
+                neededElement.textContent = "Target reached";
+            } else {
+                neededElement.textContent =
+                    `${needed} ${needed === 1 ? "class" : "classes"}`;
+            }
 
-            const message = document.getElementById("resultMessage");
+            const canMissElement =
+                document.getElementById("classesCanMiss");
 
-            if (needed > 0) {
+            if (current + epsilon < target) {
+                canMissElement.textContent =
+                    "0 — attend upcoming classes";
+            } else if (target === 100) {
+                canMissElement.textContent = "0";
+            } else {
+                canMissElement.textContent =
+                    `${canMiss} ${canMiss === 1 ? "class" : "classes"}`;
+            }
+
+            const message =
+                document.getElementById("resultMessage");
+
+            if (needed === Infinity) {
                 message.textContent =
-                    `Attend the next ${needed} consecutive classes without missing any to reach at least ${target}% attendance.`;
+                    "Because you have already missed at least one class, you cannot reach exactly 100% attendance by attending future classes. Your attendance percentage can still improve.";
+            } else if (needed > 0) {
+                message.textContent =
+                    `Attend the next ${needed} consecutive ${
+                        needed === 1 ? "class" : "classes"
+                    } without missing any to reach at least ${target}% attendance.`;
+            } else if (target === 100) {
+                message.textContent =
+                    "You currently have 100% attendance. Missing any future class will lower your attendance below 100%.";
             } else if (canMiss === 0) {
                 message.textContent =
-                    `You currently meet your ${target}% target, but you cannot miss a whole additional class and remain at or above it.`;
+                    `You currently meet your ${target}% target, but you cannot miss an additional whole class and remain at or above it.`;
             } else {
                 message.textContent =
-                    `You currently meet your ${target}% target. You can miss up to ${canMiss} future classes and remain at or above your target, assuming no other classes are missed.`;
+                    `You currently meet your ${target}% target. You can miss up to ${canMiss} future ${
+                        canMiss === 1 ? "class" : "classes"
+                    } and remain at or above your target, assuming no other classes are missed.`;
             }
 
             results.classList.remove("hidden");
