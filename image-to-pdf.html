@@ -167,7 +167,7 @@
     <main class="tool-container">
         <div class="tool-header">
             <h1>Image to PDF Converter</h1>
-            <p>Select one or multiple images to combine them into a single PDF document. Processes locally in your browser.</p>
+            <p>Select images to combine into a single, compressed PDF document. Processes locally in your browser.</p>
         </div>
 
         <div class="upload-area" id="dropZone" onclick="document.getElementById('fileInput').click()">
@@ -241,7 +241,7 @@
 
         fileInput.addEventListener('change', function() {
             handleFiles(this.files);
-            this.value = ''; // Reset input so same files can be selected again if cleared
+            this.value = ''; // Reset input so same files can be selected again
         });
 
         function handleFiles(files) {
@@ -255,8 +255,7 @@
             newFiles.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    const imgData = e.target.result;
-                    imageFiles.push({ file: file, dataUrl: imgData });
+                    imageFiles.push({ file: file, dataUrl: e.target.result });
                     renderPreviews();
                     updateButtons();
                 }
@@ -278,7 +277,7 @@
         }
 
         window.removeImage = function(index, event) {
-            event.stopPropagation(); // Prevent clicking the dropzone
+            event.stopPropagation();
             imageFiles.splice(index, 1);
             renderPreviews();
             updateButtons();
@@ -296,13 +295,44 @@
             updateButtons();
         });
 
+        // --- NEW COMPRESSION FUNCTION ---
+        // Compresses image using HTML5 Canvas before adding to PDF
+        function compressImage(dataUrl, maxWidth, quality) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    // Calculate new dimensions if image is larger than maxWidth
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Fill white background (fixes black backgrounds on transparent PNGs)
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Draw and compress
+                    ctx.drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', quality));
+                };
+                img.src = dataUrl;
+            });
+        }
+
         // PDF Generation Logic
         generateBtn.addEventListener('click', async () => {
             if (imageFiles.length === 0) return;
 
-            // Change button state
             const originalText = generateBtn.innerText;
-            generateBtn.innerText = "Generating...";
+            generateBtn.innerText = "Compressing & Generating...";
             generateBtn.disabled = true;
 
             try {
@@ -319,10 +349,12 @@
                 for (let i = 0; i < imageFiles.length; i++) {
                     if (i > 0) pdf.addPage();
 
+                    // Compress image before loading it into PDF (1200px max width, 70% quality JPEG)
+                    const compressedDataUrl = await compressImage(imageFiles[i].dataUrl, 1200, 0.7);
+
                     const img = new Image();
-                    img.src = imageFiles[i].dataUrl;
+                    img.src = compressedDataUrl;
                     
-                    // Wait for image to load to get dimensions
                     await new Promise(resolve => {
                         img.onload = resolve;
                     });
@@ -335,18 +367,16 @@
                     let finalHeight = pageHeight;
 
                     if (imgRatio > pageRatio) {
-                        // Image is wider than page ratio
                         finalHeight = pageWidth / imgRatio;
                     } else {
-                        // Image is taller than page ratio
                         finalWidth = pageHeight * imgRatio;
                     }
 
-                    // Center the image
                     const x = (pageWidth - finalWidth) / 2;
                     const y = (pageHeight - finalHeight) / 2;
 
-                    pdf.addImage(img, 'JPEG', x, y, finalWidth, finalHeight);
+                    // 'FAST' compression alias helps jsPDF process it quicker
+                    pdf.addImage(img, 'JPEG', x, y, finalWidth, finalHeight, undefined, 'FAST');
                 }
 
                 pdf.save("Studora-Images.pdf");
@@ -355,7 +385,6 @@
                 console.error("PDF Generation Error:", error);
                 alert("An error occurred while generating the PDF.");
             } finally {
-                // Restore button
                 generateBtn.innerText = originalText;
                 generateBtn.disabled = false;
             }
