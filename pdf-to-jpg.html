@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online PDF to JPG converter. Convert PDF pages to high-quality images instantly in your browser.">
+    <meta name="theme-color" content="#ffffff">
+    <title>PDF to JPG Converter - Studora</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <style>
+        .tool-container {
+            max-width: 900px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(28px, 5vw, 42px);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .upload-area {
+            border: 2px dashed #d8d3f5;
+            border-radius: 18px;
+            padding: 50px 20px;
+            text-align: center;
+            background: #fbfaff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary);
+            background: #f1efff;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .upload-area p {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Workspace */
+        .workspace {
+            display: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(51, 35, 110, 0.04);
+        }
+
+        .workspace.active {
+            display: block;
+        }
+
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .workspace-title {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .btn-reset {
+            background: #f1efff;
+            color: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #e5e0fa;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f1efff;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Images Grid */
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .image-card {
+            background: #fbfaff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .image-actions {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .page-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .btn-download {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn-download:hover {
+            opacity: 0.9;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            studora<span>.</span>
+        </a>
+        <nav aria-label="Main navigation">
+            <a href="index.html#tools">Explore Tools</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <main class="tool-container">
+        <div class="tool-header">
+            <h1>PDF to JPG</h1>
+            <p>Convert your PDF pages into high-quality JPG images. Everything happens securely on your device.</p>
+        </div>
+
+        <div class="upload-area" id="dropZone" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">🖼️</div>
+            <h3>Click or Drag a PDF File Here</h3>
+            <p>We'll convert each page into an image</p>
+            <input type="file" id="fileInput" accept="application/pdf">
+        </div>
+
+        <div class="workspace" id="workspace">
+            <div class="workspace-header">
+                <div class="workspace-title" id="docTitle">Document Pages</div>
+                <button class="btn-reset" id="resetBtn">Convert Another File</button>
+            </div>
+
+            <div class="loading-state" id="loadingState">
+                <div class="spinner"></div>
+                <p>Rendering pages in high quality...</p>
+            </div>
+
+            <div class="images-grid" id="imagesGrid">
+                <!-- Converted images will appear here -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <a href="index.html" class="footer-logo">
+            studora<span>.</span>
+        </a>
+        <p class="footer-tagline">Study smarter. Achieve more.</p>
+        <nav class="footer-links" aria-label="Footer navigation">
+            <a href="about.html">About Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms of Use</a>
+        </nav>
+        <small class="copyright">
+            © <span id="year"></span> Studora. All rights reserved.
+        </small>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Setup PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const workspace = document.getElementById('workspace');
+        const loadingState = document.getElementById('loadingState');
+        const imagesGrid = document.getElementById('imagesGrid');
+        const resetBtn = document.getElementById('resetBtn');
+        const docTitle = document.getElementById('docTitle');
+
+        let originalFileName = "";
+
+        // Drag and Drop handlers
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, e => {
+                e.preventDefault(); e.stopPropagation();
+            });
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'));
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'));
+        });
+
+        dropZone.addEventListener('drop', e => {
+            if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+
+        fileInput.addEventListener('change', function() {
+            if(this.files.length) handleFile(this.files[0]);
+        });
+
+        async function handleFile(file) {
+            if (file.type !== 'application/pdf') {
+                alert('Please upload a valid PDF file.');
+                return;
+            }
+
+            originalFileName = file.name.replace('.pdf', '');
+            docTitle.textContent = file.name;
+            
+            dropZone.style.display = 'none';
+            workspace.classList.add('active');
+            loadingState.style.display = 'block';
+            imagesGrid.innerHTML = '';
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                
+                // Max limit to prevent browser crash on huge PDFs
+                const totalPages = Math.min(pdf.numPages, 50); 
+                
+                for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                    await renderPageAsImage(pdf, pageNum);
+                }
+                
+                if (pdf.numPages > 50) {
+                    const notice = document.createElement('div');
+                    notice.style.gridColumn = '1 / -1';
+                    notice.style.textAlign = 'center';
+                    notice.style.color = '#d32f2f';
+                    notice.innerText = 'Note: Only the first 50 pages were rendered to ensure browser stability.';
+                    imagesGrid.appendChild(notice);
+                }
+
+            } catch (err) {
+                console.error(err);
+                alert("Could not process this PDF. It might be corrupted or password protected.");
+                resetWorkspace();
+            } finally {
+                loadingState.style.display = 'none';
+            }
+        }
+
+        async function renderPageAsImage(pdf, pageNum) {
+            const page = await pdf.getPage(pageNum);
+            
+            // Set scale for high quality (2.0 = 2x resolution)
+            const viewport = page.getViewport({ scale: 2.0 });
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            await page.render({
+                canvasContext: ctx,
+                viewport: viewport
+            }).promise;
+
+            // Convert canvas to JPG
+            const imgData = canvas.toDataURL('image/jpeg', 0.9);
+            
+            createImageCard(imgData, pageNum);
+        }
+
+        function createImageCard(imgData, pageNum) {
+            const card = document.createElement('div');
+            card.className = 'image-card';
+            
+            card.innerHTML = `
+                <img src="${imgData}" class="image-preview" alt="Page ${pageNum}">
+                <div class="image-actions">
+                    <span class="page-label">Page ${pageNum}</span>
+                    <a href="${imgData}" download="${originalFileName}-page-${pageNum}.jpg" class="btn-download">⬇ Download JPG</a>
+                </div>
+            `;
+            
+            imagesGrid.appendChild(card);
+        }
+
+        function resetWorkspace() {
+            workspace.classList.remove('active');
+            dropZone.style.display = 'block';
+            fileInput.value = '';
+            imagesGrid.innerHTML = '';
+        }
+
+        resetBtn.addEventListener('click', resetWorkspace);
+    </script>
+</body>
+</html>
