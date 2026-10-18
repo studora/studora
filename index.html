@@ -3,134 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Studora offers free student tools, including CGPA, SGPA, attendance, and percentage calculators.">
+    <meta name="description" content="Studora - Free online tools for students and developers. Calculators, PDF tools, image converters, and more.">
     <meta name="theme-color" content="#ffffff">
-    <title>Studora — Study Smarter. Achieve More.</title>
+    <title>Studora - Free Online Tools for Students & Developers</title>
     
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    
+    <style>
+        /* Homepage specific styles */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(36px, 6vw, 54px);
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--muted);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Search Bar Styles */
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--muted);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 20px 20px 55px;
+            font-size: 16px;
+            font-family: inherit;
+            border: 2px solid #e5e0fa;
+            border-radius: 16px;
+            outline: none;
+            background: #ffffff;
+            color: var(--text);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(51, 35, 110, 0.05);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(101, 84, 223, 0.15);
+        }
+
+        .search-input::placeholder {
+            color: #a09db0;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            background: #fbfaff;
+            border: 2px dashed #d8d3f5;
+            border-radius: 18px;
+            color: var(--muted);
+            font-size: 18px;
+        }
+
+        .no-results span {
+            display: block;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Navigation -->
     <header class="navbar">
         <a href="index.html" class="logo">
             studora<span>.</span>
         </a>
         <nav aria-label="Main navigation">
             <a href="#tools">Explore Tools</a>
-            <a href="#about">About</a>
+            <a href="about.html">About</a>
         </nav>
     </header>
 
     <main>
-        <!-- Hero Section -->
         <section class="hero">
-            <div class="hero-content">
-                <span class="eyebrow">YOUR STUDENT TOOLKIT</span>
-                <h1>
-                    Study smarter.<br>
-                    <span>Achieve more.</span>
-                </h1>
-                <p>
-                    Simple, free tools to help you calculate, plan, and manage your student life effortlessly.
-                </p>
-
-                <div class="search-box">
-                    <span aria-hidden="true">⌕</span>
-                    <input 
-                        type="search" 
-                        id="searchInput" 
-                        placeholder="Search for a tool..." 
-                        aria-label="Search tools"
-                    >
-                </div>
-
-                <div class="quick-info">
-                    <span>✓ Free to use</span>
-                    <span>✓ Simple and fast</span>
-                    <span>✓ No account needed</span>
-                </div>
+            <h1>All the tools you need.<br>Zero ads. Zero cost.</h1>
+            <p>18 blazing fast utilities built for students, developers, and everyday tasks. Everything runs securely right in your browser.</p>
+            
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search 18 tools (e.g., pdf, cgpa, json, image)..." autocomplete="off">
             </div>
         </section>
 
-        <!-- Tools Section -->
-        <section class="tools-section" id="tools">
-            <div class="section-heading">
-                <div>
-                    <span class="eyebrow">THE TOOLKIT</span>
-                    <h2>All Online Tools</h2>
-                    <p>Everything you need, completely free and directly in your browser.</p>
-                </div>
-                <span class="tool-count" id="toolCount">17 tools</span>
-            </div>
+        <section id="tools">
+            <div class="tools-grid" id="toolsGrid">
+                
+                <!-- 1. CGPA Calculator -->
+                <a href="cgpa.html" class="tool-card" data-search="cgpa calculator grades marks semester academics">
+                    <div class="tool-icon blue">01</div>
+                    <span class="category">ACADEMICS</span>
+                    <h3>CGPA Calculator</h3>
+                    <p>Calculate your cumulative grade point average accurately across multiple semesters.</p>
+                    <span class="card-link">Explore tool →</span>
+                </a>
 
-            <div class="tools-grid" id="toolsGrid
-                <!-- Password Generator (NEW) -->
-                <a href="password-generator.html" class="tool-card" data-search="password generator secure random strong create pass">
-                    <div class="tool-icon" style="background: #202039; color: #ffffff;">***</div>
-                    <span class="category">DEVELOPER TOOLS</span>
-                    <h3>Password Generator</h3>
-                    <p>Generate highly secure, random passwords instantly. Processed completely offline.</p>
+                <!-- 2. SGPA Calculator -->
+                <a href="sgpa.html" class="tool-card" data-search="sgpa calculator grades marks semester academics current">
+                    <div class="tool-icon blue">02</div>
+                    <span class="category">ACADEMICS</span>
+                    <h3>SGPA Calculator</h3>
+                    <p>Calculate your Semester Grade Point Average for your current classes.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
-                <!-- Study Timetable Generator (NEW) -->
-                <a href="study-timetable.html" class="tool-card" data-search="study timetable schedule generator plan planner time">
-                    <div class="tool-icon green">16</div>
+
+                <!-- 3. Attendance Calculator -->
+                <a href="attendance.html" class="tool-card" data-search="attendance calculator classes bunk missing 75%">
+                    <div class="tool-icon green">03</div>
                     <span class="category">COLLEGE LIFE</span>
-                    <h3>Study Timetable Generator</h3>
-                    <p>Enter your subjects and available time to generate a balanced study schedule with built-in breaks.</p>
+                    <h3>Attendance Calculator</h3>
+                    <p>Find out exactly how many classes you can skip while keeping your attendance above 75%.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
-                <!-- Text Formatting Tool (NEW) -->
-                <a href="case-converter.html" class="tool-card" data-search="case converter word count uppercase lowercase essay text">
-                    <div class="tool-icon" style="background: #fff0f0; color: #d32f2f;">Aa</div>
-                    <span class="category">TEXT TOOLS</span>
-                    <h3>Assignment Text Tool</h3>
-                    <p>Fix messy formatting, generate perfect title cases for your headings, and check your essay word count instantly.</p>
+
+                <!-- 4. Percentage Calculator -->
+                <a href="percentage.html" class="tool-card" data-search="percentage calculator math marks score">
+                    <div class="tool-icon orange">04</div>
+                    <span class="category">MATH TOOLS</span>
+                    <h3>Percentage Calculator</h3>
+                    <p>Quickly calculate percentages, discounts, and standard mark conversions.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
-                <!-- Base64 Converter (NEW) -->
-                <a href="base64-converter.html" class="tool-card" data-search="base64 encoder decoder decode encode string developer">
-                    <div class="tool-icon" style="background: #202039; color: #ffffff;">64</div>
-                    <span class="category">DEVELOPER TOOLS</span>
-                    <h3>Base64 Encoder/Decoder</h3>
-                    <p>Easily encode text to Base64 or decode Base64 strings back to readable text.</p>
+
+                <!-- 5. Image to PDF -->
+                <a href="image-to-pdf.html" class="tool-card" data-search="image to pdf converter pictures jpg png documents">
+                    <div class="tool-icon purple">05</div>
+                    <span class="category">FILE TOOLS</span>
+                    <h3>Image to PDF</h3>
+                    <p>Convert your JPG and PNG images into a single, organized PDF document.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
-                <!-- JSON Formatter (NEW) -->
-                <a href="json-formatter.html" class="tool-card" data-search="json formatter beautify minify code developer text">
-                    <div class="tool-icon purple" style="background: #202039; color: #ffffff;">{ }</div>
-                    <span class="category">DEVELOPER TOOLS</span>
-                    <h3>JSON Formatter</h3>
-                    <p>Format, beautify, and minify your JSON data instantly in the browser.</p>
+
+                <!-- 6. Image Compressor -->
+                <a href="image-compressor.html" class="tool-card" data-search="image compressor reduce size kb mb resize photo">
+                    <div class="tool-icon purple">06</div>
+                    <span class="category">FILE TOOLS</span>
+                    <h3>Image Compressor</h3>
+                    <p>Reduce the file size of your images instantly without losing visual quality.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
-                <!-- Exam Countdown (NEW) -->
-                <a href="exam-countdown.html" class="tool-card" data-search="exam countdown timer tracker schedule test">
-                    <div class="tool-icon orange">12</div>
-                    <span class="category">EXAM TOOLS</span>
-                    <h3>Exam Countdown</h3>
-                    <p>Track your upcoming exams. Watch the seconds tick down and stay prepared.</p>
+
+                <!-- 7. Image Resizer -->
+                <a href="image-resizer.html" class="tool-card" data-search="image resizer dimensions width height scale pixels">
+                    <div class="tool-icon purple">07</div>
+                    <span class="category">FILE TOOLS</span>
+                    <h3>Image Resizer</h3>
+                    <p>Change the dimensions (width/height) of any image quickly and easily.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
-                <!-- GPA Goal Calculator (NEW) -->
-                <a href="gpa-goal.html" class="tool-card" data-search="gpa goal calculator target cgpa semester marks">
-                    <div class="tool-icon blue">11</div>
-                    <span class="category">ACADEMICS</span>
-                    <h3>GPA Goal Calculator</h3>
-                    <p>Find out exactly what GPA you need this semester to reach your target overall CGPA.</p>
+
+                <!-- 8. Merge PDF -->
+                <a href="merge-pdf.html" class="tool-card" data-search="merge pdf combine documents join files multiple">
+                    <div class="tool-icon purple">08</div>
+                    <span class="category">PDF TOOLS</span>
+                    <h3>Merge PDF</h3>
+                    <p>Combine multiple PDF files into one single document securely in your browser.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
-                <!-- CGPA to Percentage (NEW) -->
-                <a href="cgpa-to-percentage.html" class="tool-card" data-search="cgpa to percentage convert grades marks formula">
-                    <div class="tool-icon purple">10</div>
-                    <span class="category">ACADEMICS</span>
-                    <h3>CGPA to Percentage</h3>
-                    <p>Convert your 10-point scale CGPA into a standard percentage.</p>
-                    <span class="card-link">Explore tool →</span>
-                </a>
-                <!-- Split PDF (NEW) -->
+
+                <!-- 9. Split PDF -->
                 <a href="split-pdf.html" class="tool-card" data-search="split pdf extract pages cut divide document">
                     <div class="tool-icon purple">09</div>
                     <span class="category">PDF TOOLS</span>
@@ -138,112 +207,151 @@
                     <p>Pull out exactly the pages you need from a PDF document to create a new file.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
-                <!-- Merge PDF (NEW) -->
-                <a href="merge-pdf.html" class="tool-card" data-search="merge pdf combine join document files">
-                    <div class="tool-icon purple">08</div>
-                    <span class="category">PDF TOOLS</span>
-                    <h3>Merge PDF</h3>
-                    <p>Combine multiple PDF files into a single document securely in your browser.</p>
-                    <span class="card-link">Explore tool →</span>
-                </a>
-                <!-- Image Compressor -->
-                <a href="image-compressor.html" class="tool-card" data-search="image compressor size reduce kb mb picture">
-                    <div class="tool-icon blue">06</div>
-                    <span class="category">FILE TOOLS</span>
-                    <h3>Image Compressor</h3>
-                    <p>Reduce image size instantly. Compress files under 1MB for college portals.</p>
-                    <span class="card-link">Explore tool →</span>
-                </a>
-                <!-- Image Resizer (NEW) -->
-                <a href="image-resizer.html" class="tool-card" data-search="image resizer dimensions width height pixels crop">
-                    <div class="tool-icon orange">07</div>
-                    <span class="category">FILE TOOLS</span>
-                    <h3>Image Resizer</h3>
-                    <p>Change image dimensions instantly. Perfect for passport photos and form submissions.</p>
-                    <span class="card-link">Explore tool →</span>
-                </a>
 
-                <!-- Image to PDF (NEW) -->
-                <a href="image-to-pdf.html" class="tool-card" data-search="image to pdf convert jpg png picture document">
-                    <div class="tool-icon teal">05</div>
-                    <span class="category">FILE TOOLS</span>
-                    <h3>Image to PDF</h3>
-                    <p>Convert your assignments and images into a single PDF instantly.</p>
-                    <span class="card-link">Explore tool →</span>
-                </a>
-
-                <!-- CGPA Calculator -->
-                <a href="cgpa.html" class="tool-card" data-search="cgpa cumulative grade point average grades">
-                    <div class="tool-icon purple">01</div>
+                <!-- 10. CGPA to Percentage -->
+                <a href="cgpa-to-percentage.html" class="tool-card" data-search="cgpa to percentage convert grades marks formula">
+                    <div class="tool-icon blue">10</div>
                     <span class="category">ACADEMICS</span>
-                    <h3>CGPA Calculator</h3>
-                    <p>Calculate your cumulative grade point average accurately.</p>
+                    <h3>CGPA to Percentage</h3>
+                    <p>Convert your 10-point scale CGPA into a standard percentage.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
 
-                <!-- SGPA Calculator -->
-                <a href="sgpa.html" class="tool-card" data-search="sgpa semester grade point average credits">
-                    <div class="tool-icon blue">02</div>
+                <!-- 11. GPA Goal Calculator -->
+                <a href="gpa-goal.html" class="tool-card" data-search="gpa goal calculator target cgpa semester marks">
+                    <div class="tool-icon blue">11</div>
                     <span class="category">ACADEMICS</span>
-                    <h3>SGPA Calculator</h3>
-                    <p>Calculate your semester GPA using credits and grades.</p>
+                    <h3>GPA Goal Calculator</h3>
+                    <p>Find out exactly what GPA you need this semester to reach your target overall CGPA.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
 
-                <!-- Attendance Calculator -->
-                <a href="attendance.html" class="tool-card" data-search="attendance percentage classes college">
-                    <div class="tool-icon green">03</div>
-                    <span class="category">COLLEGE LIFE</span>
-                    <h3>Attendance Calculator</h3>
-                    <p>Check your attendance and plan your next classes.</p>
-                    <span class="card-link">Explore tool →</span>
-                </a>
-
-                <!-- Percentage Calculator -->
-                <a href="percentage.html" class="tool-card" data-search="percentage marks exam score calculation">
-                    <div class="tool-icon orange">04</div>
+                <!-- 12. Exam Countdown -->
+                <a href="exam-countdown.html" class="tool-card" data-search="exam countdown timer tracker schedule test">
+                    <div class="tool-icon orange">12</div>
                     <span class="category">EXAM TOOLS</span>
-                    <h3>Percentage Calculator</h3>
-                    <p>Calculate your percentage from marks in seconds.</p>
+                    <h3>Exam Countdown</h3>
+                    <p>Track your upcoming exams. Watch the seconds tick down and stay prepared.</p>
                     <span class="card-link">Explore tool →</span>
                 </a>
+
+                <!-- 13. JSON Formatter -->
+                <a href="json-formatter.html" class="tool-card" data-search="json formatter beautify minify code developer text">
+                    <div class="tool-icon" style="background: #202039; color: #ffffff;">{ }</div>
+                    <span class="category">DEVELOPER TOOLS</span>
+                    <h3>JSON Formatter</h3>
+                    <p>Format, beautify, and minify your JSON data instantly in the browser.</p>
+                    <span class="card-link">Explore tool →</span>
+                </a>
+
+                <!-- 14. Base64 Converter -->
+                <a href="base64-converter.html" class="tool-card" data-search="base64 encoder decoder decode encode string developer">
+                    <div class="tool-icon" style="background: #202039; color: #ffffff;">64</div>
+                    <span class="category">DEVELOPER TOOLS</span>
+                    <h3>Base64 Encoder/Decoder</h3>
+                    <p>Easily encode text to Base64 or decode Base64 strings back to readable text.</p>
+                    <span class="card-link">Explore tool →</span>
+                </a>
+
+                <!-- 15. Assignment Text Tool -->
+                <a href="case-converter.html" class="tool-card" data-search="case converter word count uppercase lowercase essay text">
+                    <div class="tool-icon" style="background: #fff0f0; color: #d32f2f;">Aa</div>
+                    <span class="category">TEXT TOOLS</span>
+                    <h3>Assignment Text Tool</h3>
+                    <p>Fix messy formatting, generate perfect title cases, and check your word count.</p>
+                    <span class="card-link">Explore tool →</span>
+                </a>
+
+                <!-- 16. Study Timetable -->
+                <a href="study-timetable.html" class="tool-card" data-search="study timetable schedule generator plan planner time">
+                    <div class="tool-icon green">16</div>
+                    <span class="category">COLLEGE LIFE</span>
+                    <h3>Study Timetable</h3>
+                    <p>Enter your subjects and available time to generate a balanced study schedule.</p>
+                    <span class="card-link">Explore tool →</span>
+                </a>
+
+                <!-- 17. Password Generator -->
+                <a href="password-generator.html" class="tool-card" data-search="password generator secure random strong create pass">
+                    <div class="tool-icon" style="background: #202039; color: #ffffff;">***</div>
+                    <span class="category">DEVELOPER TOOLS</span>
+                    <h3>Password Generator</h3>
+                    <p>Generate highly secure, random passwords instantly. Processed offline.</p>
+                    <span class="card-link">Explore tool →</span>
+                </a>
+
+                <!-- 18. PDF to JPG -->
+                <a href="pdf-to-jpg.html" class="tool-card" data-search="pdf to jpg convert image picture extract">
+                    <div class="tool-icon purple">JPG</div>
+                    <span class="category">PDF TOOLS</span>
+                    <h3>PDF to JPG</h3>
+                    <p>Convert your PDF pages into high-quality JPG images securely in your browser.</p>
+                    <span class="card-link">Explore tool →</span>
+                </a>
+
+                <div class="no-results" id="noResultsMsg">
+                    <span>🤔</span>
+                    We couldn't find a tool matching your search.
+                </div>
 
             </div>
-
-            <p class="no-results" id="noResults" hidden>No tools found. Try another search.</p>
-        </section>
-
-        <!-- About Section -->
-        <section class="about-section" id="about">
-            <span class="eyebrow">WHY STUDORA?</span>
-            <h2>Less confusion. More progress.</h2>
-            <p>We're building a comprehensive platform of fast, free utilities that run directly in your browser without compromising your privacy.</p>
-            <a href="about.html">Learn more about Studora →</a>
         </section>
     </main>
 
-    <!-- Main Footer -->
     <footer class="site-footer">
         <a href="index.html" class="footer-logo">
             studora<span>.</span>
         </a>
         <p class="footer-tagline">Study smarter. Achieve more.</p>
-        
         <nav class="footer-links" aria-label="Footer navigation">
             <a href="about.html">About Us</a>
             <a href="privacy.html">Privacy Policy</a>
             <a href="contact.html">Contact</a>
             <a href="terms.html">Terms of Use</a>
         </nav>
-
         <small class="copyright">
             © <span id="year"></span> Studora. All rights reserved.
         </small>
     </footer>
 
-    <!-- Automatically update copyright year -->
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const tools = document.querySelectorAll('.tool-card');
+        const noResultsMsg = document.getElementById('noResultsMsg');
+
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            tools.forEach(tool => {
+                // Get the searchable text from the data attribute and the actual text in the card
+                const searchKeywords = tool.getAttribute('data-search') || '';
+                const title = tool.querySelector('h3').textContent.toLowerCase();
+                const desc = tool.querySelector('p').textContent.toLowerCase();
+                const category = tool.querySelector('.category').textContent.toLowerCase();
+                
+                // Combine all text to search through
+                const searchableString = `${searchKeywords} ${title} ${desc} ${category}`;
+
+                // Show or hide based on match
+                if (searchableString.includes(searchTerm)) {
+                    tool.style.display = 'flex'; // 'flex' because our tool-card is flex in style.css
+                    visibleCount++;
+                } else {
+                    tool.style.display = 'none';
+                }
+            });
+
+            // Toggle "No Results" message
+            if (visibleCount === 0) {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
