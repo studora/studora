@@ -1,0 +1,17 @@
+{
+  "name": "Studora - Free Student & Developer Tools",
+  "short_name": "Studora",
+  "start_url": "/studora/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6554df",
+  "description": "19+ blazing fast free utilities built for students and developers.",
+  "icons": [
+    {
+      "src": "preview-banner.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
