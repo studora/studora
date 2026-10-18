@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
   <url>
     <loc>https://studora.github.io/studora/</loc>
   </url>
+
+  <!-- Original Academic Tools -->
   <url>
     <loc>https://studora.github.io/studora/cgpa.html</loc>
   </url>
@@ -15,6 +18,50 @@
   <url>
     <loc>https://studora.github.io/studora/percentage.html</loc>
   </url>
+
+  <!-- New File Tools (Image & PDF) -->
+  <url>
+    <loc>https://studora.github.io/studora/image-to-pdf.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/image-compressor.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/image-resizer.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/merge-pdf.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/split-pdf.html</loc>
+  </url>
+
+  <!-- New Student Productivity Tools -->
+  <url>
+    <loc>https://studora.github.io/studora/cgpa-to-percentage.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/gpa-goal.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/exam-countdown.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/study-timetable.html</loc>
+  </url>
+
+  <!-- New Developer & Text Tools -->
+  <url>
+    <loc>https://studora.github.io/studora/json-formatter.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/base64-converter.html</loc>
+  </url>
+  <url>
+    <loc>https://studora.github.io/studora/case-converter.html</loc>
+  </url>
+
+  <!-- Informational Pages -->
   <url>
     <loc>https://studora.github.io/studora/about.html</loc>
   </url>
