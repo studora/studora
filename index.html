@@ -4,13 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Studora - Free online tools for students and developers. Calculators, PDF tools, image converters, and more.">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#6554df">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <apple-touch-icon href="preview-banner.png"></apple-touch-icon>
+
+    <!-- Open Graph / Social Media Preview Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://studora.github.io/studora/">
+    <meta property="og:title" content="Studora - Free Online Tools for Students & Developers">
+    <meta property="og:description" content="19 blazing fast utilities built for students, developers, and everyday tasks. Zero ads. 100% client-side privacy.">
+    <meta property="og:image" content="https://studora.github.io/studora/preview-banner.png">
+
+    <!-- Twitter Card Preview Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://studora.github.io/studora/">
+    <meta name="twitter:title" content="Studora - Free Online Tools for Students & Developers">
+    <meta name="twitter:description" content="19 blazing fast utilities built for students, developers, and everyday tasks. Zero ads. 100% client-side privacy.">
+    <meta name="twitter:image" content="https://studora.github.io/studora/preview-banner.png">
+
     <title>Studora - Free Online Tools for Students & Developers</title>
     
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Homepage specific styles */
         .hero {
             text-align: center;
             padding: 80px 20px 60px;
@@ -34,7 +52,6 @@
             line-height: 1.6;
         }
 
-        /* Search Bar Styles */
         .search-container {
             position: relative;
             max-width: 600px;
@@ -67,10 +84,6 @@
         .search-input:focus {
             border-color: var(--primary);
             box-shadow: 0 10px 40px rgba(101, 84, 223, 0.15);
-        }
-
-        .search-input::placeholder {
-            color: #a09db0;
         }
 
         .tools-grid {
@@ -116,24 +129,16 @@
     <main>
         <section class="hero">
             <h1>All the tools you need.<br>Zero ads. Zero cost.</h1>
-            <p>18 blazing fast utilities built for students, developers, and everyday tasks. Everything runs securely right in your browser.</p>
+            <p>19 blazing fast utilities built for students, developers, and everyday tasks. Everything runs securely right in your browser.</p>
             
             <div class="search-container">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search 19 tools (e.g., pdf, cgpa, json, image)..." autocomplete="off">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search 19 tools (e.g., pdf, cgpa, citation, json)..." autocomplete="off">
             </div>
         </section>
 
         <section id="tools">
             <div class="tools-grid" id="toolsGrid">
-                <!-- Citation Generator (NEW) -->
-                <a href="citation-generator.html" class="tool-card" data-search="citation generator apa mla format bibliography references essay book website">
-                    <div class="tool-icon" style="background: #fff0f0; color: #d32f2f;">” “</div>
-                    <span class="category">TEXT TOOLS</span>
-                    <h3>Citation Generator</h3>
-                    <p>Generate perfectly formatted APA and MLA citations for your essays and assignments.</p>
-                    <span class="card-link">Explore tool →</span>
-                </a>
                 
                 <!-- 1. CGPA Calculator -->
                 <a href="cgpa.html" class="tool-card" data-search="cgpa calculator grades marks semester academics">
@@ -297,6 +302,15 @@
                     <span class="card-link">Explore tool →</span>
                 </a>
 
+                <!-- 19. Citation Generator -->
+                <a href="citation-generator.html" class="tool-card" data-search="citation generator apa mla format bibliography references essay book website">
+                    <div class="tool-icon" style="background: #fff0f0; color: #d32f2f;">” “</div>
+                    <span class="category">TEXT TOOLS</span>
+                    <h3>Citation Generator</h3>
+                    <p>Generate perfectly formatted APA and MLA citations for your essays and assignments.</p>
+                    <span class="card-link">Explore tool →</span>
+                </a>
+
                 <div class="no-results" id="noResultsMsg">
                     <span>🤔</span>
                     We couldn't find a tool matching your search.
@@ -325,6 +339,15 @@
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
 
+        // Register Service Worker for PWA support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered!'))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+
         // Search Functionality
         const searchInput = document.getElementById('searchInput');
         const tools = document.querySelectorAll('.tool-card');
@@ -335,25 +358,21 @@
             let visibleCount = 0;
 
             tools.forEach(tool => {
-                // Get the searchable text from the data attribute and the actual text in the card
                 const searchKeywords = tool.getAttribute('data-search') || '';
                 const title = tool.querySelector('h3').textContent.toLowerCase();
                 const desc = tool.querySelector('p').textContent.toLowerCase();
                 const category = tool.querySelector('.category').textContent.toLowerCase();
                 
-                // Combine all text to search through
                 const searchableString = `${searchKeywords} ${title} ${desc} ${category}`;
 
-                // Show or hide based on match
                 if (searchableString.includes(searchTerm)) {
-                    tool.style.display = 'flex'; // 'flex' because our tool-card is flex in style.css
+                    tool.style.display = 'flex';
                     visibleCount++;
                 } else {
                     tool.style.display = 'none';
                 }
             });
 
-            // Toggle "No Results" message
             if (visibleCount === 0) {
                 noResultsMsg.style.display = 'block';
             } else {
