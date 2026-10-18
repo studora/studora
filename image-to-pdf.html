@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online Image to PDF converter. Convert JPG and PNG images to PDF instantly in your browser with no file uploads.">
+    <meta name="theme-color" content="#ffffff">
+    <title>Image to PDF Converter - Studora</title>
+    
+    <!-- Link to your main stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Include jsPDF Library for browser-side PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* Tool-Specific Styling */
+        .tool-container {
+            max-width: 800px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(28px, 5vw, 42px);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .upload-area {
+            border: 2px dashed #d8d3f5;
+            border-radius: 18px;
+            padding: 50px 20px;
+            text-align: center;
+            background: #fbfaff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary);
+            background: #f1efff;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .upload-area p {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* Hide actual file input */
+        #fileInput {
+            display: none;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .preview-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
