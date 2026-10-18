@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online Exam Countdown tracker. Add your exam dates and track how much time you have left to study.">
+    <meta name="theme-color" content="#ffffff">
+    <title>Exam Countdown - Studora</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .tool-container {
+            max-width: 900px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(28px, 5vw, 42px);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .add-exam-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(51, 35, 110, 0.04);
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-group input {
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #fbfaff;
+            color: var(--text);
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+        }
+
+        .btn-primary {
+            padding: 14px 28px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(101, 84, 223, 0.3);
+            transition: transform 0.2s ease;
+            height: 51px; /* matches input height */
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        /* Countdowns Grid */
+        .countdowns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .exam-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-3px);
+            border-color: #d8d3f5;
+        }
+
+        .exam-name {
+            font-family: 'Manrope', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text);
+            padding-right: 30px;
+        }
+
+        .exam-date-text {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+
+        .time-box {
+            background: #f1efff;
+            padding: 12px 5px;
+            border-radius: 10px;
+            border: 1px solid #e5e0fa;
+        }
+
+        .time-value {
+            font-family: 'Manrope', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .time-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--muted);
+            letter-spacing: 0.5px;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #d32f2f;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .delete-btn:hover {
+            opacity: 1;
+        }
+
+        .no-exams {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+            background: #fbfaff;
+            border: 2px dashed var(--border);
+            border-radius: 18px;
+        }
+
+        .exam-passed .time-box {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+        .exam-passed .time-value {
+            color: #166534;
+        }
+
+        @media (max-width: 768px) {
+            .add-exam-box {
+                grid-template-columns: 1fr;
+            }
+            .btn-primary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            studora<span>.</span>
+        </a>
+        <nav aria-label="Main navigation">
+            <a href="index.html#tools">Explore Tools</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <main class="tool-container">
+        <div class="tool-header">
+            <h1>Exam Countdown</h1>
+            <p>Track your upcoming exams. Your countdowns are saved securely in your browser.</p>
+        </div>
+
+        <div class="add-exam-box">
+            <div class="input-group">
+                <label for="examNameInput">Exam Subject / Name</label>
+                <input type="text" id="examNameInput" placeholder="e.g., Computer Networks Final">
+            </div>
+            
+            <div class="input-group">
+                <label for="examDateInput">Date & Time</label>
+                <input type="datetime-local" id="examDateInput">
+            </div>
+
+            <button class="btn-primary" id="addBtn">Add Countdown</button>
+        </div>
+
+        <div class="countdowns-grid" id="countdownsGrid">
+            <!-- Countdowns will be injected here -->
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <a href="index.html" class="footer-logo">
+            studora<span>.</span>
+        </a>
+        <p class="footer-tagline">Study smarter. Achieve more.</p>
+        <nav class="footer-links" aria-label="Footer navigation">
+            <a href="about.html">About Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms of Use</a>
+        </nav>
+        <small class="copyright">
+            © <span id="year"></span> Studora. All rights reserved.
+        </small>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        const examNameInput = document.getElementById('examNameInput');
+        const examDateInput = document.getElementById('examDateInput');
+        const addBtn = document.getElementById('addBtn');
+        const countdownsGrid = document.getElementById('countdownsGrid');
+
+        // Load exams from local storage
+        let exams = JSON.parse(localStorage.getItem('studora_exams')) || [];
+        let timerInterval;
+
+        function saveExams() {
+            localStorage.setItem('studora_exams', JSON.stringify(exams));
+        }
+
+        function addExam() {
+            const name = examNameInput.value.trim();
+            const dateStr = examDateInput.value;
+
+            if (!name || !dateStr) {
+                alert("Please enter both an exam name and a valid date/time.");
+                return;
+            }
+
+            const newExam = {
+                id: Date.now().toString(),
+                name: name,
+                date: new Date(dateStr).getTime()
+            };
+
+            exams.push(newExam);
+            
+            // Sort by date (closest first)
+            exams.sort((a, b) => a.date - b.date);
+            
+            saveExams();
+            examNameInput.value = '';
+            examDateInput.value = '';
+            
+            renderExams();
+        }
+
+        window.deleteExam = function(id) {
+            exams = exams.filter(exam => exam.id !== id);
+            saveExams();
+            renderExams();
+        }
+
+        function renderExams() {
+            countdownsGrid.innerHTML = '';
+
+            if (exams.length === 0) {
+                countdownsGrid.innerHTML = `<div class="no-exams">You have no upcoming exams tracked. Add one above!</div>`;
+                return;
+            }
+
+            exams.forEach(exam => {
+                const card = document.createElement('div');
+                card.className = 'exam-card';
+                card.id = `exam-${exam.id}`;
+                
+                const dateObj = new Date(exam.date);
+                const dateString = dateObj.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+                card.innerHTML = `
+                    <button class="delete-btn" onclick="deleteExam('${exam.id}')" title="Delete Countdown">✕</button>
+                    <div class="exam-name">${exam.name}</div>
+                    <div class="exam-date-text">${dateString}</div>
+                    
+                    <div class="timer-grid">
+                        <div class="time-box">
+                            <div class="time-value" id="days-${exam.id}">00</div>
+                            <div class="time-label">Days</div>
+                        </div>
+                        <div class="time-box">
+                            <div class="time-value" id="hours-${exam.id}">00</div>
+                            <div class="time-label">Hrs</div>
+                        </div>
+                        <div class="time-box">
+                            <div class="time-value" id="mins-${exam.id}">00</div>
+                            <div class="time-label">Mins</div>
+                        </div>
+                        <div class="time-box">
+                            <div class="time-value" id="secs-${exam.id}">00</div>
+                            <div class="time-label">Secs</div>
+                        </div>
+                    </div>
+                `;
+                
+                countdownsGrid.appendChild(card);
+            });
+
+            updateTimers(); // Immediate update to prevent 1s flash of "00"
+        }
+
+        function updateTimers() {
+            const now = new Date().getTime();
+
+            exams.forEach(exam => {
+                const distance = exam.date - now;
+                const card = document.getElementById(`exam-${exam.id}`);
+                
+                if (!card) return;
+
+                if (distance < 0) {
+                    card.classList.add('exam-passed');
+                    document.getElementById(`days-${exam.id}`).innerText = "00";
+                    document.getElementById(`hours-${exam.id}`).innerText = "00";
+                    document.getElementById(`mins-${exam.id}`).innerText = "00";
+                    document.getElementById(`secs-${exam.id}`).innerText = "00";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById(`days-${exam.id}`).innerText = days.toString().padStart(2, '0');
+                document.getElementById(`hours-${exam.id}`).innerText = hours.toString().padStart(2, '0');
+                document.getElementById(`mins-${exam.id}`).innerText = minutes.toString().padStart(2, '0');
+                document.getElementById(`secs-${exam.id}`).innerText = seconds.toString().padStart(2, '0');
+            });
+        }
+
+        addBtn.addEventListener('click', addExam);
+        
+        // Initial render and start global interval timer
+        renderExams();
+        clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimers, 1000);
+
+    </script>
+</body>
+</html>
